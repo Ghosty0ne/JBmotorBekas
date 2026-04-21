@@ -1,122 +1,122 @@
 <x-app-layout>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 
-        .page-wrap * {
-            font-family: 'Outfit', sans-serif;
-        }
+    .page-wrap * {
+        font-family: 'Outfit', sans-serif;
+    }
 
-        .hero-section {
-            background: linear-gradient(135deg, 
-            position: relative;
-            overflow: hidden;
-        }
+    .hero-section {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        position: relative;
+        overflow: hidden;
+    }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+    }
 
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: 
-            clip-path: ellipse(55% 100% at 50% 100%);
-        }
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: #f3f4f6;
+        clip-path: ellipse(55% 100% at 50% 100%);
+    }
 
-        .search-bar {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.2s;
-        }
+    .search-bar {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.2s;
+    }
 
-        .search-bar:focus-within {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
+    .search-bar:focus-within {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
 
-        .category-pill {
-            transition: all 0.2s ease;
-            border: 1.5px solid 
-            font-weight: 500;
-            font-size: 0.8rem;
-            white-space: nowrap;
-        }
+    .category-pill {
+        transition: all 0.2s ease;
+        border: 1.5px solid #e5e7eb;
+        font-weight: 500;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
 
-        .category-pill:hover {
-            border-color: 
-            color: 
-            background: 
-            transform: translateY(-1px);
-        }
+    .category-pill:hover {
+        border-color: #2563eb;
+        color: #2563eb;
+        background: #eff6ff;
+        transform: translateY(-1px);
+    }
 
-        .category-pill.active {
-            background: 
-            border-color: 
-            color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            transform: translateY(-1px);
-        }
+    .category-pill.active {
+        background: #2563eb;
+        border-color: #2563eb;
+        color: white;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        transform: translateY(-1px);
+    }
 
-        .listing-card {
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-            border: 1px solid 
-        }
+    .listing-card {
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+        border: 1px solid #e5e7eb;
+    }
 
-        .listing-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
+    .listing-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
 
-        .listing-card .card-img {
-            transition: transform 0.4s ease;
-        }
+    .listing-card .card-img {
+        transition: transform 0.4s ease;
+    }
 
-        .listing-card:hover .card-img {
-            transform: scale(1.04);
-        }
+    .listing-card:hover .card-img {
+        transform: scale(1.04);
+    }
 
-        .stat-chip {
-            background: 
-            border: 1px solid 
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: 
-            padding: 3px 8px;
-            border-radius: 20px;
-        }
+    .stat-chip {
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #475569;
+        padding: 3px 8px;
+        border-radius: 20px;
+    }
 
-        .chat-btn {
-            background: linear-gradient(135deg, 
-            transition: all 0.15s;
-            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
-        }
+    .chat-btn {
+        background: linear-gradient(135deg, #059669, #10b981);
+        transition: all 0.15s;
+        box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+    }
 
-        .chat-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
-        }
+    .chat-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+    }
 
-        .no-image-placeholder {
-            background: linear-gradient(135deg, 
-        }
+    .no-image-placeholder {
+        background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    }
 
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
 
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
 
     <div class="page-wrap min-h-screen bg-slate-100">
         <div class="hero-section pb-16 pt-10 px-6 relative">
