@@ -17,11 +17,7 @@
         left: 0;
         width: 0;
         height: 2px;
-<<<<<<< HEAD
-        background: #2563eb;
-=======
         background: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         transition: width 0.25s ease;
         border-radius: 2px;
     }
@@ -35,11 +31,7 @@
         position: absolute;
         inset: -3px;
         border-radius: 50%;
-<<<<<<< HEAD
-        background: #ef4444;
-=======
         background: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         opacity: 0;
         animation: pulse-ring 1.8s ease-out infinite;
     }
@@ -57,11 +49,7 @@
     }
 
     .nav-btn-primary {
-<<<<<<< HEAD
-        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-=======
         background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         transition: transform 0.15s, box-shadow 0.15s;
         box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
@@ -72,32 +60,20 @@
     }
 
     .logo-text {
-<<<<<<< HEAD
-        background: linear-gradient(135deg, #0f172a, #2563eb);
-=======
         background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
 
-<<<<<<< HEAD
-    .dropdown-menu {
-=======
     
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         transition: transform 0.3s ease, opacity 0.3s ease;
         transform: translateY(-8px);
         opacity: 0;
         pointer-events: none;
     }
 
-<<<<<<< HEAD
-    .dropdown-menu.open {
-=======
     
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         transform: translateY(0);
         opacity: 1;
         pointer-events: auto;

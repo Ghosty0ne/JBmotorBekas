@@ -9,11 +9,7 @@
         }
 
         .hero-section {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             position: relative;
             overflow: hidden;
         }
@@ -32,11 +28,7 @@
             left: 0;
             right: 0;
             height: 60px;
-<<<<<<< HEAD
-            background: #f1f5f9;
-=======
             background: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -56,25 +48,6 @@
         }
 
         .status-pending {
-<<<<<<< HEAD
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-reviewed {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .status-rejected {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .status-action_taken {
-            background: #d1fae5;
-            color: #065f46;
-=======
             background: 
             color: 
         }
@@ -92,7 +65,6 @@
         .status-action_taken {
             background: 
             color: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         }
     </style>
 

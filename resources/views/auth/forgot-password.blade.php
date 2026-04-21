@@ -13,11 +13,7 @@
         }
 
         .hero-section {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             position: relative;
             overflow: hidden;
         }
@@ -43,28 +39,16 @@
 
         .input-field {
             transition: all 0.2s ease;
-<<<<<<< HEAD
-            border: 2px solid #fca5a5;
-        }
-
-        .input-field:focus {
-            border-color: #dc2626;
-=======
             border: 2px solid 
         }
 
         .input-field:focus {
             border-color: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
         .submit-btn {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -79,11 +63,7 @@
         }
 
         .back-link:hover {
-<<<<<<< HEAD
-            color: #dc2626;
-=======
             color: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         }
     </style>
 </head>

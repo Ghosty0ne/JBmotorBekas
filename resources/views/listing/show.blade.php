@@ -13,32 +13,18 @@
 
         .thumb-img:hover,
         .thumb-img.active {
-<<<<<<< HEAD
-            border-color: #2563eb;
-            transform: scale(1.05);
-            box-shadow: 0 0 0 2px #2563eb;
-        }
-
-        .main-img {
-=======
             border-color: 
             transform: scale(1.05);
             box-shadow: 0 0 0 2px 
         }
 
         
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: opacity 0.2s ease;
         }
 
         .spec-card {
-<<<<<<< HEAD
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-=======
             background: 
             border: 1px solid 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             border-radius: 14px;
             padding: 12px;
             text-align: center;
@@ -46,19 +32,11 @@
         }
 
         .spec-card:hover {
-<<<<<<< HEAD
-            background: #eff6ff;
-        }
-
-        .chat-btn-main {
-            background: linear-gradient(135deg, #059669, #10b981);
-=======
             background: 
         }
 
         .chat-btn-main {
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
             transition: all 0.2s;
         }
@@ -85,30 +63,18 @@
         }
 
         .comment-input-wrap {
-<<<<<<< HEAD
-            border: 1.5px solid #e5e7eb;
-=======
             border: 1.5px solid 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             border-radius: 14px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .comment-input-wrap:focus-within {
-<<<<<<< HEAD
-            border-color: #2563eb;
-=======
             border-color: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .send-btn {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.15s;
             box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
@@ -124,21 +90,13 @@
             cursor: not-allowed;
         }
 
-<<<<<<< HEAD
-        .slide-up {
-=======
         
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.3s ease;
             transform: translateY(20px);
             opacity: 0;
         }
 
-<<<<<<< HEAD
-        .slide-up.visible {
-=======
         
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transform: translateY(0);
             opacity: 1;
         }

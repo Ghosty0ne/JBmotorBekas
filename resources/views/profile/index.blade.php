@@ -11,21 +11,12 @@
         }
 
         .menu-item:hover {
-<<<<<<< HEAD
-            background: #f8fafc;
-        }
-
-        .stat-box {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0
-=======
             background: 
         }
 
         .stat-box {
             background: 
             border: 1px solid 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             border-radius: 14px;
             padding: 14px;
             text-align: center;

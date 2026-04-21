@@ -7,11 +7,7 @@
         }
 
         .hero-section {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             position: relative;
             overflow: hidden;
         }
@@ -30,11 +26,7 @@
             left: 0;
             right: 0;
             height: 60px;
-<<<<<<< HEAD
-            background: #f1f5f9;
-=======
             background: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -52,19 +44,6 @@
 
         .reason-option {
             transition: all 0.2s ease;
-<<<<<<< HEAD
-            border: 2px solid #e5e7eb;
-        }
-
-        .reason-option:hover {
-            border-color: #dc2626;
-            background: #fef2f2;
-        }
-
-        .reason-option.selected {
-            border-color: #dc2626;
-            background: #dc2626
-=======
             border: 2px solid 
         }
 
@@ -76,16 +55,11 @@
         .reason-option.selected {
             border-color: 
             background: 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             color: white;
         }
 
         .submit-btn {
-<<<<<<< HEAD
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-=======
             background: linear-gradient(135deg, 
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }

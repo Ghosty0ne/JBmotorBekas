@@ -12,11 +12,7 @@ class ListingController extends Controller
 {
     public function index(Request $request)
     {
-<<<<<<< HEAD
-        $query = Listing::with(["images", "favorites"]);
-=======
         $query = Listing::with('images');
->>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
 
         if ($request->search) {
             $query->where('title', 'like', '%' . $request->search . '%');
