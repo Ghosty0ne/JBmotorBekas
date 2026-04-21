@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 .form-page * { font-family: 'Outfit', sans-serif; }
 .form-input {
+<<<<<<< HEAD
     border: 1.5px solid #e5e7eb;
     padding: 10px 16px; width: 100%; font-size: 0.875rem;
     transition: border-color 0.2s, box-shadow 0.2s; outline: none;
@@ -12,6 +13,17 @@
 .section-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e5e7eb; }
 .submit-btn {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
+=======
+    border: 1.5px solid 
+    padding: 10px 16px; width: 100%; font-size: 0.875rem;
+    transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+}
+.form-input:focus { border-color: 
+.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: 
+.section-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid 
+.submit-btn {
+    background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
     box-shadow: 0 4px 14px rgba(37,99,235,0.35);
     transition: all 0.2s;
 }

@@ -8,7 +8,11 @@
 
         .fav-card {
             transition: transform 0.2s, box-shadow 0.2s;
+<<<<<<< HEAD
             border: 1px solid #e5e7eb;
+=======
+            border: 1px solid 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
         }
 
         .fav-card:hover {

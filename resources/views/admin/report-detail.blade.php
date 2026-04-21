@@ -7,7 +7,11 @@
         }
 
         .hero-section {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+=======
+            background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             position: relative;
             overflow: hidden;
         }
@@ -26,7 +30,11 @@
             left: 0;
             right: 0;
             height: 60px;
+<<<<<<< HEAD
             background: #f1f5f9;
+=======
+            background: 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -47,8 +55,13 @@
         }
 
         .user-card {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #f8fafc, #e2e8f0);
             border: 1px solid #e2e8f0
+=======
+            background: linear-gradient(135deg, 
+            border: 1px solid 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
         }
 
@@ -58,8 +71,13 @@
         }
 
         .review-form {
+<<<<<<< HEAD
             background: #f8fafc;
             border: 1px solid #e5e7eb
+=======
+            background: 
+            border: 1px solid 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
         }
 
@@ -68,7 +86,11 @@
         }
 
         .submit-btn {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #dc2626, #b91c1c);
+=======
+            background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -87,7 +109,11 @@
         }
 
         .back-btn {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #6b7280, #4b5563);
+=======
+            background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(107, 114, 128, 0.3);
         }

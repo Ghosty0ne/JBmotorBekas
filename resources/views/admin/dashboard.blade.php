@@ -7,7 +7,11 @@
         }
 
         .hero-section {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+=======
+            background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             position: relative;
             overflow: hidden;
         }
@@ -26,7 +30,11 @@
             left: 0;
             right: 0;
             height: 60px;
+<<<<<<< HEAD
             background: #f1f5f9;
+=======
+            background: 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -43,7 +51,11 @@
         }
 
         .stat-icon {
+<<<<<<< HEAD
             background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+=======
+            background: linear-gradient(135deg, 
+>>>>>>> 91c9b62eef1e7d271b5d76301b57237376479849
             box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
         }
 
