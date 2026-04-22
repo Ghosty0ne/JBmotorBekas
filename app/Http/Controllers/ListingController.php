@@ -7,9 +7,32 @@ use App\Models\Listing;
 use App\Models\Favorite;
 use App\Models\ListingImage;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Http;
 
 class ListingController extends Controller
 {
+    private function uploadToCloudinary($filePath)
+    {
+        $cloudName  = env('CLOUDINARY_CLOUD_NAME');
+        $apiKey     = env('CLOUDINARY_API_KEY');
+        $apiSecret  = env('CLOUDINARY_API_SECRET');
+        $timestamp  = time();
+        $folder     = 'jbmotorbekas/listings';
+
+        $signature = sha1("folder={$folder}&timestamp={$timestamp}{$apiSecret}");
+
+        $response = Http::attach(
+            'file', file_get_contents($filePath), basename($filePath)
+        )->post("https://api.cloudinary.com/v1_1/{$cloudName}/image/upload", [
+            'api_key'   => $apiKey,
+            'timestamp' => $timestamp,
+            'signature' => $signature,
+            'folder'    => $folder,
+        ]);
+
+        return $response->json()['secure_url'] ?? null;
+    }
+
     public function index(Request $request)
     {
         $query = Listing::with(['images', 'favorites']);
@@ -64,13 +87,13 @@ class ListingController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $uploaded = cloudinary()->upload($image->getRealPath(), [
-                    'folder' => 'jbmotorbekas/listings'
-                ]);
-                ListingImage::create([
-                    'listing_id' => $listing->id,
-                    'image'      => $uploaded->getSecurePath(),
-                ]);
+                $url = $this->uploadToCloudinary($image->getRealPath());
+                if ($url) {
+                    ListingImage::create([
+                        'listing_id' => $listing->id,
+                        'image'      => $url,
+                    ]);
+                }
             }
         }
 
@@ -130,13 +153,13 @@ class ListingController extends Controller
             $listing->images()->delete();
 
             foreach ($request->file('images') as $image) {
-                $uploaded = cloudinary()->upload($image->getRealPath(), [
-                    'folder' => 'jbmotorbekas/listings'
-                ]);
-                ListingImage::create([
-                    'listing_id' => $listing->id,
-                    'image'      => $uploaded->getSecurePath(),
-                ]);
+                $url = $this->uploadToCloudinary($image->getRealPath());
+                if ($url) {
+                    ListingImage::create([
+                        'listing_id' => $listing->id,
+                        'image'      => $url,
+                    ]);
+                }
             }
         }
 
