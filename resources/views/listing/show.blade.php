@@ -273,13 +273,13 @@
                         <div class="bg-white rounded-2xl shadow-sm p-5 border border-gray-100">
                             <h3 class="font-bold text-xs uppercase tracking-wide text-gray-400 mb-4">Penjual</h3>
                             <div class="flex items-center gap-3 mb-5">
-                                @if($listing->user->avatar)
-                                    <img src="{{ $listing->user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($listing->user->name) }}"
+                                @if(auth()->user()->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
                                         class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
                                 @else
                                     <div
                                         class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-extrabold text-lg">
-                                        {{ strtoupper(substr($listing->user->name, 0, 1)) }}
+                                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                     </div>
                                 @endif
                                 <div>
