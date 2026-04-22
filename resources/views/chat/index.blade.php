@@ -25,7 +25,7 @@
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col" style="height: 70vh;">
                 <div class="px-5 py-4 border-b flex items-center gap-3 bg-gray-50 flex-shrink-0">
                     @if($receiver->avatar)
-                        <img src="{{ $receiver->avatar) }}" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{{ asset('storage/' . $receiver->avatar) }}" class="w-10 h-10 rounded-full object-cover">
                     @else
                         <div
                             class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
