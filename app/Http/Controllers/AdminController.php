@@ -2,49 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listing;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Listing;
 
 class AdminController extends Controller
 {
-    
+    public function dashboard()
+    {
+        $this->authorize('isAdmin');
 
+        $pendingReports = Report::where('status', 'pending')
+            ->latest()
+            ->get();
 
+        $reviewedReports = Report::whereIn('status', ['reviewed', 'rejected', 'action_taken'])
+            ->latest()
+            ->take(20)
+            ->get();
 
-public function dashboard()
-{
-    $this->authorize('isAdmin');
+        $blockedUsersCount = User::where('is_blocked', true)->count();
+        $totalReports = Report::count();
+        $totalListings = Listing::count();
+        $totalUsers = User::count();
+        $allListings = Listing::with('user')->latest()->paginate(15);
 
-    $pendingReports = Report::where('status', 'pending')
-        ->latest()
-        ->get();
-
-    $reviewedReports = Report::whereIn('status', ['reviewed', 'rejected', 'action_taken'])
-        ->latest()
-        ->take(20)
-        ->get();
-
-    $blockedUsersCount = User::where('is_blocked', true)->count();
-    $totalReports = Report::count();
-    $totalListings = \App\Models\Listing::count(); 
-    $totalUsers = User::count(); 
-$allListings = \App\Models\Listing::with('user')->latest()->paginate(15);
-
-return view('admin.dashboard', [
-    'pendingReports'    => $pendingReports,
-    'reviewedReports'   => $reviewedReports,
-    'blockedUsersCount' => $blockedUsersCount,
-    'totalReports'      => $totalReports,
-    'totalListings'     => $totalListings,
-    'totalUsers'        => $totalUsers,
-    'allListings'       => $allListings,
-]);
-}
-
-    
-
+        return view('admin.dashboard', [
+            'pendingReports'    => $pendingReports,
+            'reviewedReports'   => $reviewedReports,
+            'blockedUsersCount' => $blockedUsersCount,
+            'totalReports'      => $totalReports,
+            'totalListings'     => $totalListings,
+            'totalUsers'        => $totalUsers,
+            'allListings'       => $allListings,
+        ]);
+    }
 
     public function viewReport(Report $report)
     {
@@ -53,38 +46,34 @@ return view('admin.dashboard', [
         return view('admin.report-detail', ['report' => $report]);
     }
 
-    
-
-
     public function reviewReport(Request $request, Report $report)
     {
         $this->authorize('isAdmin');
 
         $validated = $request->validate([
-            'status' => 'required|in:reviewed,rejected,action_taken',
+            'status'      => 'required|in:reviewed,rejected,action_taken',
             'admin_notes' => 'nullable|string|max:1000',
-            'action' => 'required_if:status,action_taken|in:block,delete',
+            'action'      => 'required_if:status,action_taken|in:block,delete',
         ]);
 
         $report->update([
-            'status' => $validated['status'],
+            'status'      => $validated['status'],
             'admin_notes' => $validated['admin_notes'],
             'reviewed_by' => auth()->id(),
             'reviewed_at' => now(),
         ]);
 
-        
         if ($validated['status'] === 'action_taken' && isset($validated['action'])) {
             if ($validated['action'] === 'block') {
                 $report->reportedUser->update([
-                    'is_blocked' => true,
-                    'blocked_at' => now(),
-                    'admin_message' => "Akun Anda telah diblokir karena: " . ($validated['admin_notes'] ?? 'Melanggar syarat dan ketentuan platform')
+                    'is_blocked'     => true,
+                    'blocked_at'     => now(),
+                    'admin_message'  => 'Akun Anda telah diblokir karena: ' . ($validated['admin_notes'] ?? 'Melanggar syarat dan ketentuan platform'),
                 ]);
                 $message = 'User telah diblokir';
             } elseif ($validated['action'] === 'delete') {
                 $report->reportedUser->update([
-                    'admin_message' => "Akun Anda telah dihapus karena: " . ($validated['admin_notes'] ?? 'Melanggar syarat dan ketentuan platform')
+                    'admin_message' => 'Akun Anda telah dihapus karena: ' . ($validated['admin_notes'] ?? 'Melanggar syarat dan ketentuan platform'),
                 ]);
                 $report->reportedUser->listings()->delete();
                 $report->reportedUser->delete();
@@ -97,9 +86,6 @@ return view('admin.dashboard', [
         return redirect()->route('admin.dashboard')->with('success', $message);
     }
 
-    
-
-
     public function blockedUsers()
     {
         $this->authorize('isAdmin');
@@ -111,24 +97,18 @@ return view('admin.dashboard', [
         return view('admin.blocked-users', ['blockedUsers' => $blockedUsers]);
     }
 
-    
-
-
     public function unblockUser(User $user)
     {
         $this->authorize('isAdmin');
 
         $user->update([
-            'is_blocked' => false,
+            'is_blocked'    => false,
             'admin_message' => null,
-            'blocked_at' => null
+            'blocked_at'    => null,
         ]);
 
         return redirect()->back()->with('success', 'User telah dibuka blokirnya');
     }
-
-    
-
 
     public function deleteUser(User $user)
     {
@@ -141,8 +121,14 @@ return view('admin.dashboard', [
         return redirect()->back()->with('success', "Akun {$username} telah dihapus");
     }
 
-    
+    public function deleteListing(Listing $listing)
+    {
+        $this->authorize('isAdmin');
 
+        $listing->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Iklan berhasil dihapus!');
+    }
 
     protected function authorize($ability)
     {
