@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\AdminController;
 use App\Models\Chat;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {return redirect()->route('listing.index');
+Route::get('/', function () {
+    return redirect()->route('listing.index');
 });
 
 Route::get('/listing/create', [ListingController::class, 'create'])->name('listing.create');
@@ -21,7 +22,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat/{user_id}/{listing_id}', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/messages/{user_id}/{listing_id}', [ChatController::class, 'messages'])->name('chat.messages');
     Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
-    Route::get('/chat/unread-count', function () {return response()->json(['count' => Chat::where('receiver_id', auth()->id())->whereNull('read_at')->count()]);})->name('chat.unread');
+    Route::get('/chat/unread-count', function () {
+        return response()->json(['count' => Chat::where('receiver_id', auth()->id())->whereNull('read_at')->count()]);
+    })->name('chat.unread');
     Route::post('/listing', [ListingController::class, 'store'])->name('listing.store');
     Route::get('/listing/{listing}/edit', [ListingController::class, 'edit'])->name('listing.edit');
     Route::put('/listing/{listing}', [ListingController::class, 'update'])->name('listing.update');
@@ -35,20 +38,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-listing', [ProfileController::class, 'myListing'])->name('my.listing');
     Route::get('/favorites', [ProfileController::class, 'myFavorite'])->name('favorites');
 
-    
     Route::get('/report/{user_id}', [ReportController::class, 'create'])->name('report.create');
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');
     Route::get('/report-history/{report}', [ReportController::class, 'show'])->name('report.show');
 
-    
-    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::get('/report/{report}', [AdminController::class, 'viewReport'])->name('view-report');
-        Route::post('/report/{report}/review', [AdminController::class, 'reviewReport'])->name('review-report');
-        Route::get('/blocked-users', [AdminController::class, 'blockedUsers'])->name('blocked-users');
-        Route::post('/user/{user}/unblock', [AdminController::class, 'unblockUser'])->name('unblock-user');
-        Route::delete('/user/{user}/delete', [AdminController::class, 'deleteUser'])->name('delete-user');
-    });
+Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/report/{report}', [AdminController::class, 'viewReport'])->name('view-report');
+    Route::post('/report/{report}/review', [AdminController::class, 'reviewReport'])->name('review-report');
+    Route::get('/blocked-users', [AdminController::class, 'blockedUsers'])->name('blocked-users');
+    Route::post('/user/{user}/unblock', [AdminController::class, 'unblockUser'])->name('unblock-user');
+    Route::delete('/user/{user}/delete', [AdminController::class, 'deleteUser'])->name('delete-user');
+    Route::delete('/listing/{listing}/delete', [AdminController::class, 'deleteListing'])->name('delete-listing');
+});
 });
 
 require __DIR__.'/auth.php';
