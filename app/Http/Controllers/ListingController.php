@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Listing;
-use App\Models\Favorite;
-use App\Models\ListingImage;
 use App\Models\Comment;
+use App\Models\Favorite;
+use App\Models\Listing;
+use App\Models\ListingImage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ListingController extends Controller
 {
     private function uploadToCloudinary($filePath)
     {
-        $cloudName  = env('CLOUDINARY_CLOUD_NAME');
-        $apiKey     = env('CLOUDINARY_API_KEY');
-        $apiSecret  = env('CLOUDINARY_API_SECRET');
-        $timestamp  = time();
-        $folder     = 'jbmotorbekas/listings';
+        $cloudName = env('CLOUDINARY_CLOUD_NAME');
+        $apiKey = env('CLOUDINARY_API_KEY');
+        $apiSecret = env('CLOUDINARY_API_SECRET');
+        $timestamp = time();
+        $folder = 'jbmotorbekas/listings';
 
         $signature = sha1("folder={$folder}&timestamp={$timestamp}{$apiSecret}");
 
         $response = Http::attach(
             'file', file_get_contents($filePath), basename($filePath)
         )->post("https://api.cloudinary.com/v1_1/{$cloudName}/image/upload", [
-            'api_key'   => $apiKey,
+            'api_key' => $apiKey,
             'timestamp' => $timestamp,
             'signature' => $signature,
-            'folder'    => $folder,
+            'folder' => $folder,
         ]);
 
         return $response->json()['secure_url'] ?? null;
@@ -38,7 +38,7 @@ class ListingController extends Controller
         $query = Listing::with(['images', 'favorites']);
 
         if ($request->search) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            $query->where('title', 'like', '%'.$request->search.'%');
         }
 
         if ($request->category) {
@@ -62,27 +62,27 @@ class ListingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
-            'category'    => 'required|string',
-            'price'       => 'required|numeric',
-            'year'        => 'required|numeric',
-            'engine_cc'   => 'required|numeric',
-            'mileage'     => 'required|numeric',
+            'title' => 'required|string|max:255',
+            'category' => 'required|string',
+            'price' => 'required|numeric',
+            'year' => 'required|numeric',
+            'engine_cc' => 'required|numeric',
+            'mileage' => 'required|numeric',
             'description' => 'required|string',
-            'location'    => 'required|string',
-            'images.*'    => 'image|mimes:jpg,jpeg,png|max:2048',
+            'location' => 'required|string',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $listing = Listing::create([
-            'title'       => $request->title,
-            'price'       => $request->price,
-            'year'        => $request->year,
-            'mileage'     => $request->mileage,
-            'engine_cc'   => $request->engine_cc,
-            'location'    => $request->location,
-            'category'    => $request->category,
+            'title' => $request->title,
+            'price' => $request->price,
+            'year' => $request->year,
+            'mileage' => $request->mileage,
+            'engine_cc' => $request->engine_cc,
+            'location' => $request->location,
+            'category' => $request->category,
             'description' => $request->description,
-            'user_id'     => auth()->id(),
+            'user_id' => auth()->id(),
         ]);
 
         if ($request->hasFile('images')) {
@@ -91,7 +91,7 @@ class ListingController extends Controller
                 if ($url) {
                     ListingImage::create([
                         'listing_id' => $listing->id,
-                        'image'      => $url,
+                        'image' => $url,
                     ]);
                 }
             }
@@ -136,15 +136,15 @@ class ListingController extends Controller
         }
 
         $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'category'    => 'required|string',
-            'price'       => 'required|numeric',
-            'year'        => 'required|numeric',
-            'engine_cc'   => 'required|numeric',
-            'mileage'     => 'required|numeric',
+            'title' => 'required|string|max:255',
+            'category' => 'required|string',
+            'price' => 'required|numeric',
+            'year' => 'required|numeric',
+            'engine_cc' => 'required|numeric',
+            'mileage' => 'required|numeric',
             'description' => 'required|string',
-            'location'    => 'required|string',
-            'images.*'    => 'image|mimes:jpg,jpeg,png|max:2048',
+            'location' => 'required|string',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $listing->update($validated);
@@ -157,7 +157,7 @@ class ListingController extends Controller
                 if ($url) {
                     ListingImage::create([
                         'listing_id' => $listing->id,
-                        'image'      => $url,
+                        'image' => $url,
                     ]);
                 }
             }
@@ -182,7 +182,7 @@ class ListingController extends Controller
 
     public function like($id)
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return response()->json(['status' => 'unauthorized'], 401);
         }
 
@@ -192,30 +192,53 @@ class ListingController extends Controller
 
         if ($like) {
             $like->delete();
+
             return response()->json(['status' => 'unliked']);
         } else {
             Favorite::create([
-                'user_id'    => auth()->id(),
+                'user_id' => auth()->id(),
                 'listing_id' => $id,
             ]);
+
             return response()->json(['status' => 'liked']);
         }
     }
 
+    public function getComments($id)
+    {
+        $comments = Comment::where('listing_id', $id)
+            ->with('user')
+            ->latest()
+            ->get();
+
+        return response()->json($comments->map(function ($c) {
+            return [
+                'id' => $c->id,
+                'content' => $c->content,
+                'time' => $c->created_at->diffForHumans(),
+                'user' => ['name' => $c->user->name],
+            ];
+        }));
+    }
+
     public function comment(Request $request, $id)
     {
-        if (!auth()->check()) return back();
+        if (! auth()->check()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
         $request->validate([
             'content' => 'required|string|max:500',
         ]);
 
-        Comment::create([
-            'user_id'    => auth()->id(),
+        $comment = Comment::create([
+            'user_id' => auth()->id(),
             'listing_id' => $id,
-            'content'    => $request->content,
+            'content' => $request->content,
         ]);
 
-        return back();
+        $comment->load('user');
+
+        return response()->json($comment);
     }
 }

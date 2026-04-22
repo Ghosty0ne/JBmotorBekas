@@ -14,6 +14,7 @@ Route::get('/', function () {return redirect()->route('listing.index');
 Route::get('/listing/create', [ListingController::class, 'create'])->name('listing.create');
 Route::get('/listing', [ListingController::class, 'index'])->name('listing.index');
 Route::get('/listing/{listing}', [ListingController::class, 'show'])->name('listing.show');
+Route::get('/listing/{id}/comments', [ListingController::class, 'getComments'])->name('listing.comments');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/chat', [ChatController::class, 'inbox'])->name('chat.inbox');
