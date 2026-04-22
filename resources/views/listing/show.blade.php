@@ -398,7 +398,7 @@
 
         @auth
                         const CURRENT_USER_NAME = @json(auth()->user()->name);
-            const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent({{ auth()->user()->name }})}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
+            const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(@json(auth()->user()->name))}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
             let commentCount = {{ $comments->count() }};
 
             function submitComment() {
