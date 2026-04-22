@@ -464,5 +464,45 @@
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitComment(); }
             });
         @endauth
+        let lastCommentId = 0;
+
+function fetchComments() {
+    fetch(`/listing/{{ $listing->id }}/comments`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.length) return;
+
+            const newest = data[0];
+
+            if (newest.id === lastCommentId) return;
+
+            const list = document.getElementById('comments-list');
+            list.innerHTML = '';
+
+            data.reverse().forEach(c => {
+                list.insertAdjacentHTML('beforeend', `
+                    <div class="comment-item flex gap-3">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.user.name)}&size=36"
+                            class="w-9 h-9 rounded-xl">
+                        <div class="flex-1">
+                            <div class="bg-gray-50 rounded-2xl px-4 py-3">
+                                <div class="text-sm font-bold text-gray-800">${c.user.name}</div>
+                                <p class="text-sm text-gray-700">${c.content}</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            lastCommentId = newest.id;
+            document.getElementById('comment-count-badge').innerText = data.length;
+        });
+}
+
+
+setInterval(fetchComments, 3000);
+
+
+fetchComments();
     </script>
 </x-app-layout>
