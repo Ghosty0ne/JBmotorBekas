@@ -131,14 +131,14 @@
                     <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                         @if($listing->images->count())
                             <div class="overflow-hidden" style="height:340px;">
-                                <img id="main-img" src="{{ asset('storage/' . $listing->images->first()->image) }}"
+                                <img id="main-img" src="{{ $listing->images->first()->image }}"
                                     class="w-full h-full object-cover">
                             </div>
                             @if($listing->images->count() > 1)
                                 <div class="flex gap-2 p-3 overflow-x-auto">
                                     @foreach($listing->images as $i => $img)
-                                        <img src="{{ asset('storage/' . $img->image) }}"
-                                            onclick="changeImage('{{ asset('storage/' . $img->image) }}', this)"
+                                        <img src="{{ $img->image }}"
+                                            onclick="changeImage('{{ $img->image }}', this)"
                                             class="thumb-img w-20 h-14 object-cover rounded-xl border-2 border-transparent flex-shrink-0 {{ $i === 0 ? 'active' : '' }}">
                                     @endforeach
                                 </div>
@@ -274,7 +274,7 @@
                             <h3 class="font-bold text-xs uppercase tracking-wide text-gray-400 mb-4">Penjual</h3>
                             <div class="flex items-center gap-3 mb-5">
                                 @if($listing->user->avatar)
-                                    <img src="{{ asset('storage/' . $listing->user->avatar) }}"
+                                    <img src="{{ $listing->user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($listing->user->name) }}"
                                         class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
                                 @else
                                     <div
