@@ -397,7 +397,7 @@
         }
 
         @auth
-                    const CURRENT_USER_NAME = @json(auth()->user()->name);
+                        const CURRENT_USER_NAME = @json(auth()->user()->name);
             const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent({{ auth()->user()->name }})}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
             let commentCount = {{ $comments->count() }};
 
@@ -419,15 +419,18 @@
                     },
                     body: JSON.stringify({ content })
                 })
+                    .then(res => {
+                        if (!res.ok) throw new Error('Gagal');
+                        return res.json();
+                    })
                     .then(() => {
-                        prependComment(content);
                         input.value = '';
                         showToast('✅', 'Komentar terkirim!');
+                        lastCommentId = 0; 
+                        fetchComments();   
                     })
                     .catch(() => {
-                        prependComment(content);
-                        input.value = '';
-                        showToast('✅', 'Komentar terkirim!');
+                        showToast('❌', 'Gagal mengirim komentar!');
                     })
                     .finally(() => {
                         btn.disabled = false;
@@ -439,18 +442,18 @@
                 document.getElementById('no-comments')?.remove();
                 const list = document.getElementById('comments-list');
                 list.insertAdjacentHTML('afterbegin', `
-                            <div class="comment-item flex gap-3">
-                                <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
-                                <div class="flex-1">
-                                    <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
-                                            <span class="text-[11px] text-gray-400">Baru saja</span>
+                                <div class="comment-item flex gap-3">
+                                    <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
+                                    <div class="flex-1">
+                                        <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
+                                                <span class="text-[11px] text-gray-400">Baru saja</span>
+                                            </div>
+                                            <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
                                         </div>
-                                        <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
                                     </div>
-                                </div>
-                            </div>`);
+                                </div>`);
                 commentCount++;
                 document.getElementById('comment-count-badge').innerText = commentCount;
             }
@@ -474,30 +477,30 @@
 
                         if (comments.length === 0) {
                             list.innerHTML = `<div id="no-comments" class="text-center py-10">
-                        <div class="text-4xl mb-2">💬</div>
-                        <p class="text-gray-500 text-sm font-medium">Belum ada komentar</p>
-                        <p class="text-gray-400 text-xs mt-1">Jadilah yang pertama!</p>
-                    </div>`;
+                            <div class="text-4xl mb-2">💬</div>
+                            <p class="text-gray-500 text-sm font-medium">Belum ada komentar</p>
+                            <p class="text-gray-400 text-xs mt-1">Jadilah yang pertama!</p>
+                        </div>`;
                             badge.innerText = 0;
                             return;
                         }
 
                         badge.innerText = comments.length;
                         list.innerHTML = comments.map(c => `
-                    <div class="comment-item flex gap-3">
-                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45"
-                            class="w-9 h-9 rounded-xl flex-shrink-0">
-                        <div class="flex-1">
-                            <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-bold text-gray-800">${escHtml(c.name)}</span>
-                                    <span class="text-[11px] text-gray-400">${c.time}</span>
+                        <div class="comment-item flex gap-3">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45"
+                                class="w-9 h-9 rounded-xl flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-sm font-bold text-gray-800">${escHtml(c.name)}</span>
+                                        <span class="text-[11px] text-gray-400">${c.time}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-700 leading-relaxed">${escHtml(c.content)}</p>
                                 </div>
-                                <p class="text-sm text-gray-700 leading-relaxed">${escHtml(c.content)}</p>
                             </div>
                         </div>
-                    </div>
-                `).join('');
+                    `).join('');
                     });
             }
 
