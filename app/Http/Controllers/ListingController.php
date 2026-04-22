@@ -63,14 +63,16 @@ class ListingController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('listings', 'public');
-                ListingImage::create([
-                    'listing_id' => $listing->id,
-                    'image'      => $path,
-                ]);
-            }
-        }
+    foreach ($request->file('images') as $image) {
+        $uploaded = cloudinary()->upload($image->getRealPath(), [
+            'folder' => 'jbmotorbekas/listings'
+        ]);
+        ListingImage::create([
+            'listing_id' => $listing->id,
+            'image'      => $uploaded->getSecurePath(),
+        ]);
+    }
+}
 
         return redirect()->route('listing.index');
     }
@@ -129,11 +131,13 @@ class ListingController extends Controller
             $listing->images()->delete();
 
             foreach ($request->file('images') as $image) {
-                $path = $image->store('listings', 'public');
-                ListingImage::create([
-                    'listing_id' => $listing->id,
-                    'image'      => $path,
-                ]);
+               $uploaded = cloudinary()->upload($image->getRealPath(), [
+    'folder' => 'jbmotorbekas/listings'
+]);
+ListingImage::create([
+    'listing_id' => $listing->id,
+    'image'      => $uploaded->getSecurePath(),
+]);
             }
         }
 
