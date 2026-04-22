@@ -5,35 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Listing;
 
 class AdminController extends Controller
 {
     
 
 
-    public function dashboard()
-    {
-        $this->authorize('isAdmin');
 
-        $pendingReports = Report::where('status', 'pending')
-            ->latest()
-            ->get();
+public function dashboard()
+{
+    $this->authorize('isAdmin');
 
-        $reviewedReports = Report::whereIn('status', ['reviewed', 'rejected', 'action_taken'])
-            ->latest()
-            ->take(20)
-            ->get();
+    $pendingReports = Report::where('status', 'pending')
+        ->latest()
+        ->get();
 
-        $blockedUsersCount = User::where('is_blocked', true)->count();
-        $totalReports = Report::count();
+    $reviewedReports = Report::whereIn('status', ['reviewed', 'rejected', 'action_taken'])
+        ->latest()
+        ->take(20)
+        ->get();
 
-        return view('admin.dashboard', [
-            'pendingReports' => $pendingReports,
-            'reviewedReports' => $reviewedReports,
-            'blockedUsersCount' => $blockedUsersCount,
-            'totalReports' => $totalReports,
-        ]);
-    }
+    $blockedUsersCount = User::where('is_blocked', true)->count();
+    $totalReports = Report::count();
+    $totalListings = \App\Models\Listing::count(); 
+    $totalUsers = User::count(); 
+
+    return view('admin.dashboard', [
+        'pendingReports'    => $pendingReports,
+        'reviewedReports'   => $reviewedReports,
+        'blockedUsersCount' => $blockedUsersCount,
+        'totalReports'      => $totalReports,
+        'totalListings'     => $totalListings, 
+        'totalUsers'        => $totalUsers,    
+    ]);
+}
 
     
 
