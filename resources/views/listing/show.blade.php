@@ -277,8 +277,7 @@
                                 @if($listing->user->avatar)
                                                             <img src="{{ Str::startsWith($listing->user->avatar, 'http')
                                     ? $listing->user->avatar
-                                    : Storage::url($listing->user->avatar) }}"
-                                                                class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
+                                    : Storage::url($listing->user->avatar) }}" class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
                                 @else
                                     <div
                                         class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-extrabold text-lg">
@@ -397,7 +396,7 @@
         }
 
         @auth
-                        const CURRENT_USER_NAME = @json(auth()->user()->name);
+                const CURRENT_USER_NAME = @json(auth()->user()->name);
             const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent(@json(auth()->user()->name))}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
             let commentCount = {{ $comments->count() }};
 
@@ -419,41 +418,41 @@
                     },
                     body: JSON.stringify({ content })
                 })
-                    .then(res => {
-                        if (!res.ok) throw new Error('Gagal');
-                        return res.json();
-                    })
-                    .then(() => {
-                        input.value = '';
-                        showToast('✅', 'Komentar terkirim!');
-                        lastCommentId = 0; 
-                        fetchComments();   
-                    })
-                    .catch(() => {
-                        showToast('❌', 'Gagal mengirim komentar!');
-                    })
-                    .finally(() => {
-                        btn.disabled = false;
-                        btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim';
-                    });
+                .then(res => {
+                    if (!res.ok) throw new Error('Gagal');
+                    return res.json();
+                })
+                .then(() => {
+                    input.value = '';
+                    showToast('✅', 'Komentar terkirim!');
+                    lastCommentId = 0;
+                    fetchComments();
+                })
+                .catch(() => {
+                    showToast('❌', 'Gagal mengirim komentar!');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim';
+                });
             }
 
             function prependComment(content) {
                 document.getElementById('no-comments')?.remove();
                 const list = document.getElementById('comments-list');
                 list.insertAdjacentHTML('afterbegin', `
-                                <div class="comment-item flex gap-3">
-                                    <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
-                                    <div class="flex-1">
-                                        <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
-                                                <span class="text-[11px] text-gray-400">Baru saja</span>
-                                            </div>
-                                            <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
-                                        </div>
+                        <div class="comment-item flex gap-3">
+                            <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
+                                        <span class="text-[11px] text-gray-400">Baru saja</span>
                                     </div>
-                                </div>`);
+                                    <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
+                                </div>
+                            </div>
+                        </div>`);
                 commentCount++;
                 document.getElementById('comment-count-badge').innerText = commentCount;
             }
@@ -467,47 +466,46 @@
             document.getElementById('comment-input')?.addEventListener('keydown', e => {
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitComment(); }
             });
+        @endauth
+        let lastCommentId = 0;
 
-            function loadComments() {
-                fetch(`/listing/{{ $listing->id }}/comments`)
-                    .then(r => r.json())
-                    .then(comments => {
-                        const list = document.getElementById('comments-list');
-                        const badge = document.getElementById('comment-count-badge');
+function fetchComments() {
+    fetch(`/listing/{{ $listing->id }}/comments`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.length) return;
 
-                        if (comments.length === 0) {
-                            list.innerHTML = `<div id="no-comments" class="text-center py-10">
-                            <div class="text-4xl mb-2">💬</div>
-                            <p class="text-gray-500 text-sm font-medium">Belum ada komentar</p>
-                            <p class="text-gray-400 text-xs mt-1">Jadilah yang pertama!</p>
-                        </div>`;
-                            badge.innerText = 0;
-                            return;
-                        }
+            const newest = data[0];
 
-                        badge.innerText = comments.length;
-                        list.innerHTML = comments.map(c => `
-                        <div class="comment-item flex gap-3">
-                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45"
-                                class="w-9 h-9 rounded-xl flex-shrink-0">
-                            <div class="flex-1">
-                                <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <span class="text-sm font-bold text-gray-800">${escHtml(c.name)}</span>
-                                        <span class="text-[11px] text-gray-400">${c.time}</span>
-                                    </div>
-                                    <p class="text-sm text-gray-700 leading-relaxed">${escHtml(c.content)}</p>
-                                </div>
+            if (newest.id === lastCommentId) return;
+
+            const list = document.getElementById('comments-list');
+            list.innerHTML = '';
+
+            data.reverse().forEach(c => {
+                list.insertAdjacentHTML('beforeend', `
+                    <div class="comment-item flex gap-3">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.user.name)}&size=36"
+                            class="w-9 h-9 rounded-xl">
+                        <div class="flex-1">
+                            <div class="bg-gray-50 rounded-2xl px-4 py-3">
+                                <div class="text-sm font-bold text-gray-800">${c.user.name}</div>
+                                <p class="text-sm text-gray-700">${c.content}</p>
                             </div>
                         </div>
-                    `).join('');
-                    });
-            }
+                    </div>
+                `);
+            });
 
-            loadComments();
-            setInterval(loadComments, 5000);
-        @endauth
+            lastCommentId = newest.id;
+            document.getElementById('comment-count-badge').innerText = data.length;
+        });
+}
 
 
+setInterval(fetchComments, 3000);
+
+
+fetchComments();
     </script>
 </x-app-layout>
