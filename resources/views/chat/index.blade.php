@@ -8,7 +8,7 @@
 
             <div class="bg-white rounded-2xl shadow-sm p-4 flex gap-4 mb-4">
                 @if($listing->images->count())
-                    <img src="{{ asset('storage/' . $listing->images->first()->image) }}"
+                    <img src="{{ $listing->images->first()->image }}"
                         class="w-20 h-16 object-cover rounded-xl flex-shrink-0">
                 @else
                     <div class="w-20 h-16 bg-gray-100 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
