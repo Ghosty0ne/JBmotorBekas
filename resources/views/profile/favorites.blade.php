@@ -58,7 +58,7 @@
                                 <a href="{{ route('listing.show', $fav->listing->id) }}" class="block relative overflow-hidden"
                                     style="height:180px;">
                                     @if($fav->listing->images->count())
-                                        <img src="{{ asset('storage/' . $fav->listing->images->first()->image) }}"
+                                        <img src="{{ $fav->listing->images->first()->image }}"
                                             class="card-img w-full h-full object-cover">
                                     @else
                                         <div
