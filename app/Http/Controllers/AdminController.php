@@ -30,15 +30,17 @@ public function dashboard()
     $totalReports = Report::count();
     $totalListings = \App\Models\Listing::count(); 
     $totalUsers = User::count(); 
+$allListings = \App\Models\Listing::with('user')->latest()->paginate(15);
 
-    return view('admin.dashboard', [
-        'pendingReports'    => $pendingReports,
-        'reviewedReports'   => $reviewedReports,
-        'blockedUsersCount' => $blockedUsersCount,
-        'totalReports'      => $totalReports,
-        'totalListings'     => $totalListings, 
-        'totalUsers'        => $totalUsers,    
-    ]);
+return view('admin.dashboard', [
+    'pendingReports'    => $pendingReports,
+    'reviewedReports'   => $reviewedReports,
+    'blockedUsersCount' => $blockedUsersCount,
+    'totalReports'      => $totalReports,
+    'totalListings'     => $totalListings,
+    'totalUsers'        => $totalUsers,
+    'allListings'       => $allListings,
+]);
 }
 
     
