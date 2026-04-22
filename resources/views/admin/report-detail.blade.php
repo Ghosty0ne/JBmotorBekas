@@ -7,7 +7,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
             position: relative;
             overflow: hidden;
         }
@@ -26,7 +26,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: 
+            background: #f1f5f9;
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -47,8 +47,8 @@
         }
 
         .user-card {
-            background: linear-gradient(135deg, 
-            border: 1px solid 
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
 
@@ -58,8 +58,8 @@
         }
 
         .review-form {
-            background: 
-            border: 1px solid 
+            background: #fefefe;
+            border: 1px solid #e5e7eb;
             transition: all 0.2s ease;
         }
 
@@ -68,7 +68,7 @@
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -87,7 +87,7 @@
         }
 
         .back-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #6b7280, #4b5563);
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(107, 114, 128, 0.3);
         }
@@ -125,7 +125,7 @@
                         </div>
                         <div>
                             <h2 class="text-2xl font-bold text-gray-900">Detail Laporan</h2>
-                            <p class="text-gray-600">ID: 
+                            <p class="text-gray-600">ID: #{{ $report->id }}</p>
                         </div>
                     </div>
                     <a href="{{ route('admin.dashboard') }}" class="back-btn text-white font-bold py-3 px-6 rounded-xl flex items-center gap-2">
@@ -390,7 +390,7 @@
             }
         }
 
-        
+        // Add fade-in animation
         const style = document.createElement('style');
         style.textContent = `
             .animate-fade-in {

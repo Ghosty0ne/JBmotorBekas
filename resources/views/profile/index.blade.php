@@ -11,12 +11,12 @@
         }
 
         .menu-item:hover {
-            background: 
+            background: #f8fafc;
         }
 
         .stat-box {
-            background: 
-            border: 1px solid 
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 14px;
             text-align: center;

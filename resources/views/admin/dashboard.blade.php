@@ -7,7 +7,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #c084fc 100%);
             position: relative;
             overflow: hidden;
         }
@@ -26,7 +26,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: 
+            background: #f1f5f9;
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -43,7 +43,7 @@
         }
 
         .stat-icon {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
             box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
         }
 
@@ -102,7 +102,7 @@
             @endif
 
             <!-- Statistics -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 <div class="stat-card rounded-2xl p-6">
                     <div class="flex items-center gap-4">
                         <div class="stat-icon w-12 h-12 rounded-2xl flex items-center justify-center">
@@ -135,6 +135,20 @@
                     <div class="flex items-center gap-4">
                         <div class="stat-icon w-12 h-12 rounded-2xl flex items-center justify-center">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-purple-600 text-sm font-semibold uppercase tracking-wide">Total Iklan</p>
+                            <p class="text-3xl font-extrabold text-gray-900 mt-1">{{ $totalListings }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-4">
+                        <div class="stat-icon w-12 h-12 rounded-2xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                             </svg>
                         </div>
@@ -143,7 +157,7 @@
                             <p class="text-3xl font-extrabold text-gray-900 mt-1">{{ $blockedUsersCount }}</p>
                         </div>
                         <a href="{{ route('admin.blocked-users') }}" class="text-purple-600 hover:text-purple-700 text-sm font-semibold">
-                            Lihat Detail →
+                            Lihat →
                         </a>
                     </div>
                 </div>
@@ -312,6 +326,138 @@
                     </div>
                 </div>
             @endif
+
+            {{-- ===== KELOLA POSTINGAN ===== --}}
+            <div class="table-card rounded-2xl overflow-hidden mt-8">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Kelola Postingan Iklan
+                        <span class="bg-white/20 text-white text-xs font-bold px-2.5 py-0.5 rounded-full ml-1">
+                            {{ $allListings->total() }}
+                        </span>
+                    </h3>
+                    <span class="text-blue-200 text-sm">Hapus iklan yang melanggar aturan</span>
+                </div>
+
+                @if ($allListings->count() > 0)
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Iklan
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Penjual
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Harga
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Kategori
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Diposting
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($allListings as $listing)
+                                    <tr class="hover:bg-blue-50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                @if($listing->images->count())
+                                                    <img src="{{ asset('storage/' . $listing->images->first()->image) }}"
+                                                        class="w-12 h-10 object-cover rounded-lg flex-shrink-0">
+                                                @else
+                                                    <div class="w-12 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0">🏍️</div>
+                                                @endif
+                                                <div class="min-w-0">
+                                                    <a href="{{ route('listing.show', $listing->id) }}"
+                                                        target="_blank"
+                                                        class="text-sm font-semibold text-gray-900 hover:text-blue-600 truncate block max-w-[200px]">
+                                                        {{ $listing->title }}
+                                                    </a>
+                                                    <p class="text-xs text-gray-400 truncate max-w-[200px]">📍 {{ $listing->location }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                                    {{ strtoupper(substr($listing->user->name, 0, 1)) }}
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $listing->user->name }}</p>
+                                                    <p class="text-xs text-gray-400">{{ $listing->user->email }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="text-sm font-bold text-blue-600">
+                                                Rp {{ number_format($listing->price) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                                                {{ $listing->category }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $listing->created_at->diffForHumans() }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-2">
+                                                <a href="{{ route('listing.show', $listing->id) }}"
+                                                    target="_blank"
+                                                    class="action-btn inline-flex items-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium rounded-lg transition-colors">
+                                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                    Lihat
+                                                </a>
+                                                <form action="{{ route('admin.delete-listing', $listing->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus iklan &quot;{{ addslashes($listing->title) }}&quot;? Tindakan ini tidak dapat dibatalkan.')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit"
+                                                        class="action-btn inline-flex items-center px-3 py-1.5 bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 text-xs font-semibold rounded-lg transition-colors">
+                                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                        </svg>
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- PAGINATION --}}
+                    @if($allListings->hasPages())
+                        <div class="px-6 py-4 border-t border-gray-100">
+                            {{ $allListings->links() }}
+                        </div>
+                    @endif
+                @else
+                    <div class="p-12 text-center">
+                        <div class="text-5xl mb-3">🏍️</div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada iklan</h3>
+                        <p class="text-gray-500">Tidak ada postingan iklan saat ini.</p>
+                    </div>
+                @endif
+            </div>
+
         </div>
     </div>
 </x-app-layout>

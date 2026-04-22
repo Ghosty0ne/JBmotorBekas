@@ -9,7 +9,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
             position: relative;
             overflow: hidden;
         }
@@ -28,7 +28,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: 
+            background: #f1f5f9;
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -48,23 +48,23 @@
         }
 
         .status-pending {
-            background: 
-            color: 
+            background: #fef3c7;
+            color: #92400e;
         }
 
         .status-reviewed {
-            background: 
-            color: 
+            background: #dbeafe;
+            color: #1e40af;
         }
 
         .status-rejected {
-            background: 
-            color: 
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         .status-action_taken {
-            background: 
-            color: 
+            background: #dcfce7;
+            color: #166534;
         }
     </style>
 

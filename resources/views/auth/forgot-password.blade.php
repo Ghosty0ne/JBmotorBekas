@@ -13,7 +13,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
             position: relative;
             overflow: hidden;
         }
@@ -39,16 +39,16 @@
 
         .input-field {
             transition: all 0.2s ease;
-            border: 2px solid 
+            border: 2px solid #e5e7eb;
         }
 
         .input-field:focus {
-            border-color: 
+            border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -63,7 +63,7 @@
         }
 
         .back-link:hover {
-            color: 
+            color: #dc2626;
         }
     </style>
 </head>

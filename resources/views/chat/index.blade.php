@@ -99,7 +99,7 @@
         function handleImageSelection(input) {
             const files = Array.from(input.files);
             
-            
+            // Limit to 10 images
             if (selectedFiles.length + files.length > 10) {
                 alert('Maksimal 10 gambar untuk setiap pesan');
                 files.splice(10 - selectedFiles.length);
@@ -163,7 +163,7 @@
             formData.append('listing_id', document.getElementById('listing_id').value);
             formData.append('message', msg);
             
-            
+            // Add all selected images
             selectedFiles.forEach(file => {
                 formData.append('images[]', file);
             });

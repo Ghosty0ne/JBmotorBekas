@@ -17,7 +17,7 @@
         left: 0;
         width: 0;
         height: 2px;
-        background: 
+        background: #2563EB;
         transition: width 0.25s ease;
         border-radius: 2px;
     }
@@ -31,7 +31,7 @@
         position: absolute;
         inset: -3px;
         border-radius: 50%;
-        background: 
+        background: #ef4444;
         opacity: 0;
         animation: pulse-ring 1.8s ease-out infinite;
     }
@@ -49,7 +49,7 @@
     }
 
     .nav-btn-primary {
-        background: linear-gradient(135deg, 
+        background: linear-gradient(135deg, #2563EB, #1d4ed8);
         transition: transform 0.15s, box-shadow 0.15s;
         box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
@@ -60,20 +60,20 @@
     }
 
     .logo-text {
-        background: linear-gradient(135deg, 
+        background: linear-gradient(135deg, #2563EB, #06b6d4);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
 
-    
+    #mobile-menu {
         transition: transform 0.3s ease, opacity 0.3s ease;
         transform: translateY(-8px);
         opacity: 0;
         pointer-events: none;
     }
 
-    
+    #mobile-menu.open {
         transform: translateY(0);
         opacity: 1;
         pointer-events: auto;

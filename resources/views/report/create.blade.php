@@ -7,7 +7,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
             position: relative;
             overflow: hidden;
         }
@@ -26,7 +26,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: 
+            background: #f1f5f9;
             clip-path: ellipse(55% 100% at 50% 100%);
         }
 
@@ -44,22 +44,22 @@
 
         .reason-option {
             transition: all 0.2s ease;
-            border: 2px solid 
+            border: 2px solid #e5e7eb;
         }
 
         .reason-option:hover {
-            border-color: 
-            background: 
+            border-color: #dc2626;
+            background: #fef2f2;
         }
 
         .reason-option.selected {
-            border-color: 
-            background: 
+            border-color: #dc2626;
+            background: #dc2626;
             color: white;
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -136,10 +136,11 @@
                     </div>
                 </div>
 
-                <form action="{{ route('report.store') }}?listing={{ request()->query('listing') }}" method="POST" class="space-y-8">
+                <form action="{{ route('report.store') }}" method="POST" class="space-y-8">
                     @csrf
 
                     <input type="hidden" name="reported_user_id" value="{{ $reportedUser->id }}">
+                    <input type="hidden" name="listing_id" value="{{ request()->query('listing') }}">
 
                     <!-- Reason Selection -->
                     <div>
@@ -256,7 +257,7 @@
                             </svg>
                             Kirim Laporan
                         </button>
-                        <a href="{{ route('listing.show', ['listing' => request()->query('listing')]) }}" class="cancel-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-4 px-8 rounded-xl text-center flex items-center justify-center gap-2">
+                        <a href="{{ request()->query('listing') ? route('listing.show', ['listing' => request()->query('listing')]) : route('listing.index') }}" class="cancel-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-4 px-8 rounded-xl text-center flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -292,7 +293,7 @@
         function handleImageSelection(input) {
             const files = Array.from(input.files);
             
-            
+            // Limit to 10 images
             if (selectedFiles.length + files.length > 10) {
                 alert('Maksimal 10 gambar yang dapat diunggah');
                 files.splice(10 - selectedFiles.length);
@@ -335,14 +336,14 @@
             selectedFiles.splice(index, 1);
             updateImagePreview();
             
-            
+            // Reset the file input
             const fileInput = document.getElementById('images');
             const dataTransfer = new DataTransfer();
             selectedFiles.forEach(file => dataTransfer.items.add(file));
             fileInput.files = dataTransfer.files;
         }
 
-        
+        // Handle drag and drop
         const fileInput = document.getElementById('images');
         const label = fileInput.parentElement;
 
@@ -362,7 +363,7 @@
             const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
             
             if (files.length > 0) {
-                
+                // Update the file input with dropped files
                 const dataTransfer = new DataTransfer();
                 selectedFiles.forEach(file => dataTransfer.items.add(file));
                 files.forEach(file => dataTransfer.items.add(file));
@@ -380,25 +381,25 @@
             }
         });
 
-        
+        // Handle reason selection
         document.querySelectorAll('.reason-option').forEach(option => {
             option.addEventListener('click', function() {
-                
+                // Remove selected class from all options
                 document.querySelectorAll('.reason-option').forEach(opt => {
                     opt.classList.remove('selected');
                     opt.querySelector('.checkmark').classList.add('hidden');
                 });
 
-                
+                // Add selected class to clicked option
                 this.classList.add('selected');
                 this.querySelector('.checkmark').classList.remove('hidden');
 
-                
+                // Check the radio button
                 this.querySelector('input[type="radio"]').checked = true;
             });
         });
 
-        
+        // Set default selection
         document.querySelector('.reason-option').click();
     </script>
 </x-app-layout>

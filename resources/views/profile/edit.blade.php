@@ -7,7 +7,7 @@
         }
 
         .form-input {
-            border: 1.5px solid 
+            border: 1.5px solid #e2e8f0;
             border-radius: 12px;
             padding: 10px 16px;
             width: 100%;
@@ -18,7 +18,7 @@
         }
 
         .form-input:focus {
-            border-color: 
+            border-color: #2563EB;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
@@ -26,7 +26,7 @@
             display: block;
             font-size: 0.75rem;
             font-weight: 600;
-            color: 
+            color: #64748b;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -37,7 +37,7 @@
             border-radius: 20px;
             padding: 24px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-            border: 1px solid 
+            border: 1px solid #f1f5f9;
             margin-bottom: 16px;
         }
     </style>

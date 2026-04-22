@@ -1,14 +1,17 @@
 <x-app-layout>
 <div class="flex bg-gray-50 overflow-hidden" style="height: calc(100vh - 64px);">
 
+    <!-- ===== SIDEBAR: DAFTAR CHAT ===== -->
     <div class="w-full md:w-80 border-r bg-white flex-shrink-0 flex flex-col"
          id="sidebar" :class="activeChatId ? 'hidden md:flex' : 'flex'">
 
+        <!-- HEADER SIDEBAR -->
         <div class="p-4 border-b flex-shrink-0">
             <h2 class="font-bold text-gray-800 text-lg">Pesan</h2>
             <p class="text-xs text-gray-400">{{ auth()->user()->name }}</p>
         </div>
 
+        <!-- LIST PERCAKAPAN — scroll hanya di sini -->
         <div class="flex-1 overflow-y-auto min-h-0">
             @forelse($chats as $key => $messages)
                 @php
@@ -133,7 +136,7 @@ let inboxSelectedFiles = [];
 function handleInboxImageSelection(input) {
     const files = Array.from(input.files);
     
-    
+    // Limit to 10 images
     if (inboxSelectedFiles.length + files.length > 10) {
         alert('Maksimal 10 gambar untuk setiap pesan');
         files.splice(10 - inboxSelectedFiles.length);
@@ -264,7 +267,7 @@ function sendMessage() {
     formData.append('listing_id', listingId);
     formData.append('message', msg);
     
-    
+    // Add all selected images
     inboxSelectedFiles.forEach(file => {
         formData.append('images[]', file);
     });

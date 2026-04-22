@@ -1,10 +1,11 @@
 @forelse ($messages as $msg)
 <div class="flex {{ $msg->sender_id == auth()->id() ? 'justify-end' : 'justify-start' }} mb-3 gap-2 items-end">
 
+    {{-- Avatar penerima (kiri) --}}
     @if($msg->sender_id != auth()->id())
         @if($msg->sender->avatar)
             <img src="{{ asset('storage/' . $msg->sender->avatar) }}"
-                class="w-7 h-7 rounded-full object-cover flex-shrink-0 mb-0.5">
+                class="w-7 h-7 rounded-full object-cover flex-shrink-0 mb-0.5 border border-gray-100">
         @else
             <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold flex-shrink-0 mb-0.5">
                 {{ strtoupper(substr($msg->sender->name, 0, 1)) }}
@@ -32,6 +33,7 @@
                 </a>
             </div>
         @endif
+
         @if($msg->message)
             <div class="px-4 py-2.5 rounded-2xl text-sm leading-relaxed mt-1
                 {{ $msg->sender_id == auth()->id()
@@ -40,6 +42,7 @@
                 {{ $msg->message }}
             </div>
         @endif
+
         <p class="text-[10px] text-gray-400 mt-1 px-1
             {{ $msg->sender_id == auth()->id() ? 'text-right' : 'text-left' }}">
             {{ $msg->created_at->format('H:i') }}
@@ -48,8 +51,17 @@
             @endif
         </p>
     </div>
+
+    {{-- Avatar sendiri (kanan) --}}
     @if($msg->sender_id == auth()->id())
-        <div class="w-7 flex-shrink-0"></div>
+        @if(auth()->user()->avatar)
+            <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                class="w-7 h-7 rounded-full object-cover flex-shrink-0 mb-0.5 border-2 border-blue-200">
+        @else
+            <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mb-0.5">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </div>
+        @endif
     @endif
 
 </div>

@@ -3,15 +3,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 .form-page * { font-family: 'Outfit', sans-serif; }
 .form-input {
-    border: 1.5px solid 
+    border: 1.5px solid #e2e8f0; border-radius: 12px;
     padding: 10px 16px; width: 100%; font-size: 0.875rem;
     transition: border-color 0.2s, box-shadow 0.2s; outline: none;
 }
-.form-input:focus { border-color: 
-.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: 
-.section-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid 
+.form-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.section-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #f1f5f9; margin-bottom: 16px; }
 .submit-btn {
-    background: linear-gradient(135deg, 
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
     box-shadow: 0 4px 14px rgba(37,99,235,0.35);
     transition: all 0.2s;
 }

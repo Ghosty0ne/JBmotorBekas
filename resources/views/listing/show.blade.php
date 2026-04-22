@@ -13,18 +13,18 @@
 
         .thumb-img:hover,
         .thumb-img.active {
-            border-color: 
+            border-color: #2563EB !important;
             transform: scale(1.05);
-            box-shadow: 0 0 0 2px 
+            box-shadow: 0 0 0 2px #2563EB;
         }
 
-        
+        #main-img {
             transition: opacity 0.2s ease;
         }
 
         .spec-card {
-            background: 
-            border: 1px solid 
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 12px;
             text-align: center;
@@ -32,11 +32,11 @@
         }
 
         .spec-card:hover {
-            background: 
+            background: #eff6ff;
         }
 
         .chat-btn-main {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #059669, #047857);
             box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
             transition: all 0.2s;
         }
@@ -63,18 +63,18 @@
         }
 
         .comment-input-wrap {
-            border: 1.5px solid 
+            border: 1.5px solid #e2e8f0;
             border-radius: 14px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .comment-input-wrap:focus-within {
-            border-color: 
+            border-color: #2563EB;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .send-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #2563EB, #1d4ed8);
             transition: all 0.15s;
             box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
@@ -90,13 +90,13 @@
             cursor: not-allowed;
         }
 
-        
+        #toast {
             transition: all 0.3s ease;
             transform: translateY(20px);
             opacity: 0;
         }
 
-        
+        #toast.show {
             transform: translateY(0);
             opacity: 1;
         }
@@ -394,7 +394,7 @@
 
         @auth
             const CURRENT_USER_NAME = @json(auth()->user()->name);
-                    const CURRENT_USER_AVATAR = `https:
+                    const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent({{ auth()->user()->name }})}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
                     let commentCount = {{ $comments->count() }};
 
                     function submitComment() {

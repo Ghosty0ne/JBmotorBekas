@@ -13,7 +13,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 60%, #f87171 100%);
             position: relative;
             overflow: hidden;
         }
@@ -39,16 +39,16 @@
 
         .input-field {
             transition: all 0.2s ease;
-            border: 2px solid 
+            border: 2px solid #e5e7eb;
         }
 
         .input-field:focus {
-            border-color: 
+            border-color: #dc2626;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
 
         .register-btn {
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
         }
@@ -63,7 +63,7 @@
         }
 
         .login-link:hover {
-            color: 
+            color: #dc2626;
         }
 
         .password-strength {
@@ -71,15 +71,15 @@
         }
 
         .password-strength.weak {
-            color: 
+            color: #dc2626;
         }
 
         .password-strength.medium {
-            color: 
+            color: #f59e0b;
         }
 
         .password-strength.strong {
-            color: 
+            color: #10b981;
         }
     </style>
 </head>
@@ -287,7 +287,7 @@
 </div>
 
 <script>
-
+// Password strength checker
 function checkPasswordStrength(password) {
     let strength = 0;
     let checks = {
@@ -296,7 +296,7 @@ function checkPasswordStrength(password) {
         number: /\d/.test(password)
     };
 
-    
+    // Update visual indicators
     const lengthCheck = document.getElementById('length-check');
     const letterCheck = document.getElementById('letter-check');
     const numberCheck = document.getElementById('number-check');
@@ -305,7 +305,7 @@ function checkPasswordStrength(password) {
     if (letterCheck) letterCheck.className = checks.letter ? 'w-2 h-2 rounded-full bg-green-500' : 'w-2 h-2 rounded-full bg-gray-300';
     if (numberCheck) numberCheck.className = checks.number ? 'w-2 h-2 rounded-full bg-green-500' : 'w-2 h-2 rounded-full bg-gray-300';
 
-    
+    // Calculate strength
     if (checks.length) strength++;
     if (checks.letter) strength++;
     if (checks.number) strength++;
@@ -334,12 +334,12 @@ function checkPasswordStrength(password) {
     }
 }
 
-
+// Real-time password checking
 document.getElementById('password').addEventListener('input', function() {
     checkPasswordStrength(this.value);
 });
 
-
+// Password confirmation validation
 document.getElementById('password_confirmation').addEventListener('input', function() {
     const password = document.getElementById('password').value;
     const confirm = this.value;
