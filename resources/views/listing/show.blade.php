@@ -137,8 +137,7 @@
                             @if($listing->images->count() > 1)
                                 <div class="flex gap-2 p-3 overflow-x-auto">
                                     @foreach($listing->images as $i => $img)
-                                        <img src="{{ $img->image }}"
-                                            onclick="changeImage('{{ $img->image }}', this)"
+                                        <img src="{{ $img->image }}" onclick="changeImage('{{ $img->image }}', this)"
                                             class="thumb-img w-20 h-14 object-cover rounded-xl border-2 border-transparent flex-shrink-0 {{ $i === 0 ? 'active' : '' }}">
                                     @endforeach
                                 </div>
@@ -162,7 +161,8 @@
                                 <h1 class="text-2xl font-extrabold text-gray-900 leading-tight">{{ $listing->title }}
                                 </h1>
                                 <p class="text-blue-600 text-2xl font-extrabold mt-1">Rp
-                                    {{ number_format($listing->price) }}</p>
+                                    {{ number_format($listing->price) }}
+                                </p>
                             </div>
                             <button id="like-btn" onclick="toggleLike({{ $listing->id }})"
                                 class="like-btn flex flex-col items-center gap-1 p-3 rounded-2xl hover:bg-gray-50 transition-colors">
@@ -197,7 +197,8 @@
                         <div class="mt-6 pt-5 border-t border-gray-100">
                             <h3 class="font-bold text-xs uppercase tracking-wide text-gray-400 mb-2">Deskripsi</h3>
                             <p class="text-gray-600 leading-relaxed text-sm whitespace-pre-line">
-                                {{ $listing->description }}</p>
+                                {{ $listing->description }}
+                            </p>
                         </div>
                     </div>
 
@@ -273,13 +274,14 @@
                         <div class="bg-white rounded-2xl shadow-sm p-5 border border-gray-100">
                             <h3 class="font-bold text-xs uppercase tracking-wide text-gray-400 mb-4">Penjual</h3>
                             <div class="flex items-center gap-3 mb-5">
-                                @if(auth()->user()->avatar)
-                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
-                                        class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
+                                @if($listing->user->avatar)
+                                                            <img src="{{ Str::startsWith($listing->user->avatar, 'http')
+                                    ? $listing->user->avatar
+                                    : Storage::url($listing->user->avatar) }}" class="w-12 h-12 rounded-xl object-cover border-2 border-blue-100">
                                 @else
                                     <div
                                         class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-extrabold text-lg">
-                                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                        {{ strtoupper(substr($listing->user->name, 0, 1)) }}
                                     </div>
                                 @endif
                                 <div>
@@ -292,7 +294,8 @@
                                             </p>
                                         @else
                                             <p class="text-xs text-gray-400">Aktif
-                                                {{ $listing->user->last_seen->diffForHumans() }}</p>
+                                                {{ $listing->user->last_seen->diffForHumans() }}
+                                            </p>
                                         @endif
                                     @endif
                                 </div>
@@ -393,73 +396,73 @@
         }
 
         @auth
-            const CURRENT_USER_NAME = @json(auth()->user()->name);
-                    const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent({{ auth()->user()->name }})}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
-                    let commentCount = {{ $comments->count() }};
+                const CURRENT_USER_NAME = @json(auth()->user()->name);
+            const CURRENT_USER_AVATAR = `https://ui-avatars.com/api/?name=${encodeURIComponent({{ auth()->user()->name }})}&size=36&background=dbeafe&color=1d4ed8&bold=true&font-size=0.45`;
+            let commentCount = {{ $comments->count() }};
 
-                    function submitComment() {
-                        const input = document.getElementById('comment-input');
-                        const btn = document.getElementById('comment-submit');
-                        const content = input.value.trim();
-                        if (!content) { input.focus(); return; }
+            function submitComment() {
+                const input = document.getElementById('comment-input');
+                const btn = document.getElementById('comment-submit');
+                const content = input.value.trim();
+                if (!content) { input.focus(); return; }
 
-                        btn.disabled = true;
-                        btn.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>';
+                btn.disabled = true;
+                btn.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>';
 
-                        fetch(`/listing/{{ $listing->id }}/comment`, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest',
-                            },
-                            body: JSON.stringify({ content })
-                        })
-                            .then(() => {
-                                prependComment(content);
-                                input.value = '';
-                                showToast('✅', 'Komentar terkirim!');
-                            })
-                            .catch(() => {
-                                prependComment(content);
-                                input.value = '';
-                                showToast('✅', 'Komentar terkirim!');
-                            })
-                            .finally(() => {
-                                btn.disabled = false;
-                                btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim';
-                            });
-                    }
-
-                    function prependComment(content) {
-                        document.getElementById('no-comments')?.remove();
-                        const list = document.getElementById('comments-list');
-                        list.insertAdjacentHTML('afterbegin', `
-                    <div class="comment-item flex gap-3">
-                        <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
-                        <div class="flex-1">
-                            <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
-                                    <span class="text-[11px] text-gray-400">Baru saja</span>
-                                </div>
-                                <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
-                            </div>
-                        </div>
-                    </div>`);
-                        commentCount++;
-                        document.getElementById('comment-count-badge').innerText = commentCount;
-                    }
-
-                    function escHtml(str) {
-                        const d = document.createElement('div');
-                        d.appendChild(document.createTextNode(str));
-                        return d.innerHTML;
-                    }
-
-                    document.getElementById('comment-input')?.addEventListener('keydown', e => {
-                        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitComment(); }
+                fetch(`/listing/{{ $listing->id }}/comment`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({ content })
+                })
+                    .then(() => {
+                        prependComment(content);
+                        input.value = '';
+                        showToast('✅', 'Komentar terkirim!');
+                    })
+                    .catch(() => {
+                        prependComment(content);
+                        input.value = '';
+                        showToast('✅', 'Komentar terkirim!');
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim';
                     });
+            }
+
+            function prependComment(content) {
+                document.getElementById('no-comments')?.remove();
+                const list = document.getElementById('comments-list');
+                list.insertAdjacentHTML('afterbegin', `
+                        <div class="comment-item flex gap-3">
+                            <img src="${CURRENT_USER_AVATAR}" class="w-9 h-9 rounded-xl flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-sm px-4 py-3">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-sm font-bold text-gray-800">${escHtml(CURRENT_USER_NAME)}</span>
+                                        <span class="text-[11px] text-gray-400">Baru saja</span>
+                                    </div>
+                                    <p class="text-sm text-gray-700 leading-relaxed">${escHtml(content)}</p>
+                                </div>
+                            </div>
+                        </div>`);
+                commentCount++;
+                document.getElementById('comment-count-badge').innerText = commentCount;
+            }
+
+            function escHtml(str) {
+                const d = document.createElement('div');
+                d.appendChild(document.createTextNode(str));
+                return d.innerHTML;
+            }
+
+            document.getElementById('comment-input')?.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitComment(); }
+            });
         @endauth
     </script>
 </x-app-layout>
